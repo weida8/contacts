@@ -26,7 +26,6 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/preset-flow": "^7.9.0",
-    "babel-eslint": "^10.1.0",
     "babel-plugin-react-flow-props-to-prop-types": "^0.15.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-flowtype": "^5.0.3",

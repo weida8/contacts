@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useLocation, navigate } from '@reach/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
@@ -10,8 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import withHeader from '../header';
-import { setCookie } from '../../util/auth';
-import { userLoginApi } from '../../api/authentication';
+import { loginAction } from '../../redux/authentication/actions';
 
 const containerStyles = makeStyles({
   root: {
@@ -39,6 +39,8 @@ const cardStyles = makeStyles({
 });
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const authenticationState = useSelector((state) => state.authenticationReducer);
   const cardClasses = cardStyles();
   const containerClasses = containerStyles();
   const location = useLocation();
@@ -46,24 +48,14 @@ const Login = () => {
     userName: '',
     password: '',
   });
-  const [error, setError] = useState();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const payload = {
       userName: loginState.userName,
       password: loginState.password,
       hostname: location.hostname,
     };
-    userLoginApi(payload).then((response) => {
-      if (response.data.token) {
-        setCookie('userToken', response.data.token);
-        setCookie('userName', response.data.userName);
-        navigate('/contacts');
-      }
-    })
-      .catch((loginError) => {
-        setError(loginError.response.data);
-      });
+    dispatch(loginAction(payload));
   };
 
   return (
@@ -71,9 +63,9 @@ const Login = () => {
       <Card className={cardClasses.root}>
         <CardContent className={cardClasses.cardContent}>
           <Typography variant="h6">Log In To See All Users</Typography>
-          {error && (
+          {authenticationState && authenticationState.loginError && (
           <Alert variant="outlined" severity="error">
-            {error.message}
+            {authenticationState.loginError.message}
           </Alert>
           )}
           <div style={{ margin: '30px 0' }}>

@@ -18,9 +18,7 @@ const useContactsApi = () => {
           token: getCookie('userToken'),
           userName: getCookie('userName'),
         };
-        console.log(contactsPayload);
         const response = await axios.post('/contacts/getContacts', contactsPayload);
-        console.log(response.data.data.contactList);
         setData(response.data.data.contactList);
       } catch (contactsError) {
         setError(true);

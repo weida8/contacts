@@ -1,6 +1,5 @@
 // @flow
 import React, { useState } from 'react';
-import NumberFormat from 'react-number-format';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,32 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import addContactApi from '../../api/contacts';
 import { getCookie } from '../../util/auth';
-
-type PhoneNumberFormatterType = {
-  onChange: Function,
-  inputRef: Function,
-}
-
-const PhoneNumberFormatter = (props: PhoneNumberFormatterType) => {
-  const { inputRef, onChange, ...other } = props;
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      format="(###) ###-####"
-      isNumericString
-    />
-  );
-};
+import PhoneNumberFormatter from '../../uiComponents/TextFields';
 
 type AddContactProps = {
   open: boolean,

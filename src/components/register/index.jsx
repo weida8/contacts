@@ -11,16 +11,24 @@ import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import withHeader from '../header';
 import { userRegistrationApi } from '../../api/authentication';
+import PhoneNumberFormatter from '../../uiComponents/TextFields';
 
+const containerStyles = makeStyles({
+  root: {
+    marginTop: '30vh',
+    display: 'flex',
+    width: 'max-content',
+  },
+});
 const cardStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
     minWidth: 275,
+    width: '50vh',
     maxWidth: 700,
   },
   cardContent: {
-    width: 300,
     alignSelf: 'center',
   },
   body2: {
@@ -32,9 +40,13 @@ const cardStyles = makeStyles({
 
 const Register = () => {
   const cardClasses = cardStyles();
+  const containerClasses = containerStyles();
   const [registerState, setRegisterState] = useState({
     userName: '',
     password: '',
+    email: '',
+    title: '',
+    phoneNumber: '',
   });
   const [registrationSucceeded, setRegistrationSucceeded] = useState();
   const [error, setError] = useState();
@@ -43,6 +55,9 @@ const Register = () => {
     const payload = {
       userName: registerState.userName,
       password: registerState.password,
+      email: registerState.email,
+      title: registerState.title,
+      phoneNumber: registerState.phoneNumber,
     };
     userRegistrationApi(payload).then((response) => {
       if (response.data.status === 200) {
@@ -56,7 +71,7 @@ const Register = () => {
   };
 
   return (
-    <Container fixed style={{ paddingTop: '30vh' }}>
+    <Container className={containerClasses.root}>
       <Card className={cardClasses.root}>
         <CardContent className={cardClasses.cardContent}>
           <Typography variant="h6">Register</Typography>
@@ -81,6 +96,38 @@ const Register = () => {
               variant="outlined"
               value={registerState.userName}
               onChange={(e) => setRegisterState({ ...registerState, userName: e.target.value })}
+            />
+          </div>
+          <div style={{ margin: '30px 0' }}>
+            <TextField
+              id="outlined-basic"
+              label="email"
+              variant="outlined"
+              value={registerState.email}
+              onChange={(e) => setRegisterState({ ...registerState, email: e.target.value })}
+            />
+          </div>
+          <div style={{ margin: '30px 0' }}>
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              name="phone"
+              label="Phone Number"
+              type="tel"
+              onChange={(e) => setRegisterState({ ...registerState, phoneNumber: e.target.value })}
+              autoComplete="off"
+              InputProps={{
+                inputComponent: PhoneNumberFormatter,
+              }}
+            />
+          </div>
+          <div style={{ margin: '30px 0' }}>
+            <TextField
+              id="outlined-basic"
+              label="title"
+              variant="outlined"
+              value={registerState.title}
+              onChange={(e) => setRegisterState({ ...registerState, title: e.target.value })}
             />
           </div>
           <TextField

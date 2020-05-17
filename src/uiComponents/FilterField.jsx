@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -10,7 +11,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function InputWithIcon(props) {
+type InputWithIconProps = {
+  handleFilterInput: Function
+}
+
+export default function InputWithIcon(props: InputWithIconProps) {
   const classes = useStyles();
 
   return (

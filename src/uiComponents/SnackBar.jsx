@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -16,9 +17,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedSnackbars(props) {
+type CustomizedSnackbarsProps = {
+  open: boolean,
+  message: string,
+  severity: string,
+  onClose: Function
+}
+export default function CustomizedSnackbars(props: CustomizedSnackbarsProps) {
   const classes = useStyles();
-  const { open, message, severity, onClose} = props;
+  const {
+    open, message, severity, onClose,
+  } = props;
 
   return (
     <div className={classes.root}>

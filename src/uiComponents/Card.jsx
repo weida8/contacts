@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -21,10 +22,24 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ContactCard(props) {
+type ContactCardProps = {
+  contact: {
+    name: string,
+    phone: string,
+    title: string,
+    email: string,
+    city: string
+  }
+}
+
+export default function ContactCard(props: ContactCardProps) {
   const classes = useStyles();
 
-  const {name, phone, title, email, city} = props.contact
+  const {
+    contact: {
+      name, phone, title, email, city,
+    },
+  } = props;
 
   return (
     <Card className={classes.root}>

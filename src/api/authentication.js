@@ -1,21 +1,11 @@
 import axios from 'axios';
 
-export const userLoginApi = (payload) => {
-  axios.post('authentication/login', payload)
-    .then(reponse => {
-      return response
-    })
-    .catch(error => {
-      return error
-    })
-}
+export const userLoginApi = async (payload) => {
+  const response = await axios.post('authentication/login', payload);
+  return response;
+};
 
-export const userRegistrationApi = (payload) => {
-  axios.post('/authentication/register', payload)
-    .then(response => {
-      return response
-    })
-    .catch(error => {
-      return error
-    })
-}
+export const userRegistrationApi = async (payload) => {
+  const response = await axios.post('authentication/register', payload);
+  return response;
+};
